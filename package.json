@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "mysql": "^2.18.1"
+  },
+  "name": "Discord-Bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "run": "nodemon ./src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarveySouth/Discord-Bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HarveySouth/Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/HarveySouth/Discord-Bot#readme",
+  "description": ""
+}
