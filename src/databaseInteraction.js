@@ -1,11 +1,13 @@
 require('dotenv').config();
-var mysql = require('mysql');
-var dbUser = process.env.DB_USERNAME_DISCORDBOT;
-var dbPass = process.env.DB_PASS_DISCORDBOT;
-var dbHost = process.env.DB_HOST_DISCORDBOT;
+var assert = require('assert');
 
-var connection = mysql.createConnection({
-  host     : dbHost,
-  user     : dbUser,
-  password : dbPass,
+
+const MongoClient = require('mongodb').MongoClient;
+var url = process.env.MONGO_URL;
+var database = process.env.MONGO_DB_NAME;
+
+MongoClient.connect(url, function(err, database) {
+  assert.equal(null, err);
+  console.log("Connected successfully to the mongoDB Server");
+  database.close();
 });
