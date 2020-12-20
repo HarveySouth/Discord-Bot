@@ -9,7 +9,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "run": "nodemon ./src/main.js"
+    "devTesting": "nodemon ./src/main.js",
+    "main": "nodemon ./src/main.js",
+    "csv": "nodemon ./src/main.js"
   },
   "repository": {
     "type": "git",
