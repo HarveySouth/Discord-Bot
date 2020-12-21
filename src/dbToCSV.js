@@ -52,8 +52,17 @@ queryChannels = new Promise((resolve, reject) => {MongoClient.connect(url, { use
   writeStream.write("ChannelID,Channel,Time,Author,Message\n",'UTF8');
     result.forEach((rowInChatlog) =>{
       var messageWithoutQuotes = rowInChatlog.content.replaceAll("\"", "\'\'");
-      writeStream.write(rowInChatlog.channelID +","+rowInChatlog.channel+","+rowInChatlog.date.getFullYear()+"-"+rowInChatlog.date.getMonth()+"-"+rowInChatlog.date.getDate()+" "
-    + rowInChatlog.date.getHours()+":"+rowInChatlog.date.getMinutes()+":"+rowInChatlog.date.getSeconds()+","+rowInChatlog.nickname+",\""+messageWithoutQuotes+"\"\n",'UTF8');
+      var dateMonth = (rowInChatlog.date.getMonth()+1).toString()
+      var dateDay = rowInChatlog.date.getDate().toString()
+      if(parseInt(dateDay)<10){
+        dateDay = "0"+dateDay
+      }
+      if(parseInt(dateMonth)<10){
+        dateMonth = "0"+dateMonth
+      }
+      var dateFormatted = rowInChatlog.date.getFullYear()+"-"+dateMonth+"-"+dateDay+" "
+    + rowInChatlog.date.getHours()+":"+rowInChatlog.date.getMinutes()+":"+rowInChatlog.date.getSeconds()
+      writeStream.write(rowInChatlog.channelID +","+rowInChatlog.channel+","+dateFormatted+","+rowInChatlog.nickname+",\""+messageWithoutQuotes+"\"\n",'UTF8');
     })
     writeStream.end()
   });
