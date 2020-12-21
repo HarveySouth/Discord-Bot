@@ -44,6 +44,7 @@ async function dbInsertUserAndPushGuildIfNotExists(collection, query, pushData) 
   MongoClient.connect(url, { useNewUrlParser:true, useUnifiedTopology:true },
                             function(err, client) {
     const col = client.db(database).collection(collection);
+    console.log("Inserting User");
     if(!("_id" in query)){
       col.insertOne(query, function(err, result) {
         assert.equal(null, err);
@@ -53,8 +54,8 @@ async function dbInsertUserAndPushGuildIfNotExists(collection, query, pushData) 
     else{
       const updateQuery = {_id:query.id};
       delete query.id;
-      const update = { $set: query};
-      col.updateOne(query, update,{ $push: pushData }, { upsert: true }, function(err, result) {
+      const update = { $set: query, $push: pushData};
+      col.updateOne(query, update, { upsert: true }, function(err, result) {
         assert.equal(null, err);
         client.close();
       });

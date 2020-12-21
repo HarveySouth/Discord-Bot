@@ -14,7 +14,7 @@ client.on('ready', () =>{
     connectedDiscordServer.channels.cache.forEach((channelInServer) => {
       console.log("Channel found: " + channelInServer.name);
       if(channelInServer.isText()){
-        //archive(channelInServer); //uncomment here to archive all connected channels
+        archive(channelInServer); //uncomment here to archive all connected channels
       }
     });
   });
@@ -43,7 +43,7 @@ async function archive(channel) {
         if(!(foundUsers.includes(messageInServer.author.id))){
             var nickname = messageInServer.author.username +"#"+messageInServer.author.discriminator;
             data = {_id:messageInServer.author.id, nickname:nickname};
-            dataPush = {server_id:guildID}
+            dataPush = {server_id:messageInServer.guild.id}
             db.dbInsertUserAndPushGuildIfNotExists("user",data,dataPush);
             foundUsers.push(messageInServer.author.id);
         }
@@ -54,7 +54,7 @@ async function archive(channel) {
           var attachmentMessage =" " + messageInServer.attachments.first().url;
         }
         messageContentFormatted = messageInServer.cleanContent + attachmentMessage;
-        data = {_id:messageInServer.id, content:messageContentFormatted,authorID:messageInServer.author.id,channelID:channelID,date:date};
+        data = {_id:messageInServer.id, content:messageContentFormatted,authorID:messageInServer.author.id,channelID:messageInServer.channel.id,date:date};
         db.dbInsertIfNotExists("chatLog",data);
       });
       if(messageCollection.last()){
